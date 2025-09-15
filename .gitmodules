@@ -1,0 +1,3 @@
+[submodule "chainelect/lib/forge-std"]
+	path = chainelect/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
