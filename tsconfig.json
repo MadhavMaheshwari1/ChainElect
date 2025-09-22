@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
+    "paths":{
+      "@/*":["./src/*"]
+    },
     "esModuleInterop": true,
     "allowJs": true,
     "strict": true,
@@ -29,7 +32,7 @@
     "scripts",
     "test",
     ".next/types/**/*.ts"
-  ],
+, "src/config/index.tsx", "src/config/wagmiConfig.tsx"  ],
   "exclude": [
     "node_modules"
   ]
