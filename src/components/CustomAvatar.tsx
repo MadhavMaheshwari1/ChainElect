@@ -1,17 +1,19 @@
 import type { AvatarComponent } from '@rainbow-me/rainbowkit';
+import Image from "next/image";
 
 export const CustomAvatar: AvatarComponent = ({ address, ensImage, size }) => {
 
   return ensImage ? (
-    <img
+    <Image
       src={ensImage}
+      alt="ENS Avatar"
       width={size}
       height={size}
       style={{
-        borderRadius: '50%',
-        border: `2px solid ${color}33`,
-        boxShadow: '0 0 4px rgba(0,0,0,0.2)',
-        objectFit: 'cover',
+        borderRadius: "50%",
+        border: `2px solid #3333`,
+        boxShadow: "0 0 4px rgba(0,0,0,0.2)",
+        objectFit: "cover",
       }}
     />
   ) : (
