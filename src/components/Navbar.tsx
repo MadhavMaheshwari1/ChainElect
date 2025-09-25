@@ -7,11 +7,12 @@ import Link from "next/link";
 import { RefreshCcw } from "lucide-react";
 import { useConnectModal, useAccountModal } from "@rainbow-me/rainbowkit";
 import { useAccount, useBalance, useEnsName, useDisconnect } from "wagmi";
-import VotingJSON from "../../chainelect/out/Voting.sol/Voting.json";
+import VotingJSON from "@/Contracts/Voting.json";
 import { readContract } from "wagmi/actions";
 import { Config } from "../config/Config";
 import { sepolia } from "@wagmi/core/chains";
 import { keyframes } from "@emotion/react";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const fadePulse = keyframes`
   0% { opacity: 1; }
@@ -31,12 +32,19 @@ async function checkElection(): Promise<boolean | null> {
 }
 
 const Navbar = () => {
+  const showBalance = useBreakpointValue({ base: false, md: true });
   const { openConnectModal } = useConnectModal();
   const { openAccountModal } = useAccountModal();
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect();
-  const { data: balance } = useBalance({ address, query: { enabled: !!address } });
-  const { data: ensName } = useEnsName({ address, query: { enabled: !!address } });
+  const { data: balance } = useBalance({
+    address,
+    query: { enabled: !!address },
+  });
+  const { data: ensName } = useEnsName({
+    address,
+    query: { enabled: !!address },
+  });
 
   const [isElectionActive, setIsElectionActive] = useState<boolean>(false);
 
@@ -65,8 +73,17 @@ const Navbar = () => {
       boxShadow="0 14px 16px rgba(0,0,0,0.1)"
     >
       <Link href="/" style={{ marginTop: "-6px" }}>
-        <Box w={["35px", "35px", "35px", "40px"]} h={["35px", "35px", "35px", "40px"]}>
-          <Image src="/favicon.png" alt="Logo" width={40} height={40} style={{ objectFit: "contain" }} />
+        <Box
+          w={["35px", "35px", "35px", "40px"]}
+          h={["35px", "35px", "35px", "40px"]}
+        >
+          <Image
+            src="/favicon.png"
+            alt="Logo"
+            width={40}
+            height={40}
+            style={{ objectFit: "contain" }}
+          />
         </Box>
       </Link>
 
@@ -110,7 +127,12 @@ const Navbar = () => {
           </Button>
         )}
 
-        <Box cursor="pointer" w={[3, 4, 4, 5]} h={[3, 4, 4, 5]} onClick={() => disconnect()}>
+        <Box
+          cursor="pointer"
+          w={[3, 4, 4, 5]}
+          h={[3, 4, 4, 5]}
+          onClick={() => disconnect()}
+        >
           <RefreshCcw color="#4A5568" size="100%" />
         </Box>
 
@@ -148,8 +170,13 @@ const Navbar = () => {
               cursor: "pointer",
             }}
           >
-            {balance && `${Number(balance.formatted).toFixed(3)} ${balance.symbol}`} &nbsp;|&nbsp;
-            {ensName ?? `${address?.slice(0, 6)}...${address?.slice(-4)}`}
+            {showBalance && balance && (
+              <>
+                {`${Number(balance.formatted).toFixed(3)} ${balance.symbol}`}{" "}
+                &nbsp;|&nbsp;
+              </>
+            )}
+            {ensName ?? `${address?.slice(0, 2)}...${address?.slice(-2)}`}
           </button>
         )}
       </HStack>
