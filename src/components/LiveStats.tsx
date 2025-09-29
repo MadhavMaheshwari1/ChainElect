@@ -151,7 +151,7 @@ const LiveStats = () => {
           icon1: TrendingUp,
           icon2: Clock,
           description: "Participation Rate",
-          count: totalVotersWhoVoted / registeredVoters,
+          count: totalVotersWhoVoted / (registeredVoters===0?1:registeredVoters),
         },
       ];
       setStats(currStats);
