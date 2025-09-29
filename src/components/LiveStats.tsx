@@ -63,7 +63,7 @@ const LiveStats = () => {
       chainId: sepolia.id,
     });
 
-    return typeof result === "boolean" ? result : false;
+    return typeof result === "number" ? result : 0;
   }
 
   const[electionStart,setElectionStart] = useState<number>(0);
@@ -107,10 +107,10 @@ const LiveStats = () => {
 
   useEffect(() => {
     (async () => {
-      let isElectionGoingOn = await isElectionActiveCurrently();
+      const isElectionGoingOn = await isElectionActiveCurrently();
       if(isElectionGoingOn){
-        let startTime = await electionStartOrEndTime("electionStart");
-        let endTime = await electionStartOrEndTime("electionEnd");
+        const startTime = await electionStartOrEndTime("electionStart");
+        const endTime = await electionStartOrEndTime("electionEnd");
         setElectionStart(startTime);
         setElectionEnd(endTime);
       }
@@ -279,6 +279,7 @@ const LiveStats = () => {
             <Text color="black" fontWeight="bold">Election Progress</Text>
             <Text color="#7d7c7cff" fontWeight="semibold">Time Remaining</Text>
           </HStack>
+          {electionStart+electionEnd}
           <Progress.Root>
             <Progress.Track
               style={{
