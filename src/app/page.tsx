@@ -37,8 +37,6 @@ const page = () => {
           <Box
             maxW="1600px"
             m="auto"
-            bg="white"
-            height="100vh"
             background="#e7edf5ff"
             px={6}
             py={4}
